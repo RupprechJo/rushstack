@@ -8,9 +8,15 @@ import { Extractor } from '@microsoft/api-extractor';
 
 // @public (undocumented)
 export class Class1 extends Class2<number> {
+    // @deprecated
+    deprecatedProp: string;
+    // (undocumented)
+    fivthProp: string;
     fourthProp: number;
     secondProp: boolean;
     someOverload(x: boolean | string): void;
+    // (undocumented)
+    ɵngprop: string;
 }
 
 // @public (undocumented)

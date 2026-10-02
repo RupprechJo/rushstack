@@ -53,6 +53,18 @@ export class Class1 extends Class2<number> {
   /** A fourth prop */
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   fourthProp: number;
+  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
+  fivthProp: string;
+
+  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
+  ɵngprop: string;
+
+  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
+  /**
+   * Some deprecated prop.
+   * @deprecated This prop is deprecated. Use `fourthProp` instead.
+   */
+  deprecatedProp: string;
 
   /** Some overload. Overrides `Class3.someOverload`. */
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility

@@ -219,6 +219,66 @@
           "members": [
             {
               "kind": "Property",
+              "canonicalReference": "api-documenter-scenarios!Class1#deprecatedProp:member",
+              "docComment": "/**\n * Some deprecated prop.\n *\n * @deprecated\n *\n * This prop is deprecated. Use `fourthProp` instead.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "deprecatedProp: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "deprecatedProp",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false,
+              "isProtected": false,
+              "isAbstract": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "api-documenter-scenarios!Class1#fivthProp:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "fivthProp: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "fivthProp",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false,
+              "isProtected": false,
+              "isAbstract": false
+            },
+            {
+              "kind": "Property",
               "canonicalReference": "api-documenter-scenarios!Class1#fourthProp:member",
               "docComment": "/**\n * A fourth prop\n */\n",
               "excerptTokens": [
@@ -239,6 +299,36 @@
               "isOptional": false,
               "releaseTag": "Public",
               "name": "fourthProp",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false,
+              "isProtected": false,
+              "isAbstract": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "api-documenter-scenarios!Class1#ɵngprop:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "ɵngprop: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "ɵngprop",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2

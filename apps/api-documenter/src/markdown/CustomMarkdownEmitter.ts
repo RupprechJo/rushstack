@@ -16,7 +16,8 @@ import {
   type IMarkdownEmitterContext,
   type IMarkdownEmitterOptions
 } from './MarkdownEmitter';
-import type { IndentedWriter } from '../utils/IndentedWriter';
+import { IndentedWriter } from '../utils/IndentedWriter';
+import {DocTableRow} from "../nodes/DocTableRow";
 
 export interface ICustomMarkdownEmitterOptions extends IMarkdownEmitterOptions {
   contextApiItem: ApiItem | undefined;
@@ -124,18 +125,20 @@ export class CustomMarkdownEmitter extends MarkdownEmitter {
 
         writer.write('<tbody>');
         for (const row of docTable.rows) {
-          writer.write('<tr>');
-          for (const cell of row.cells) {
-            writer.write('<td>');
-            writer.ensureNewLine();
+          if (!this.getName(row, context).trim().startsWith('[\u03B8')) {
+            writer.write('<tr>');
+            for (const cell of row.cells) {
+              writer.write('<td>');
+              writer.ensureNewLine();
+              writer.writeLine();
+              this.writeNode(cell.content, context, false);
+              writer.ensureNewLine();
+              writer.writeLine();
+              writer.write('</td>');
+            }
+            writer.write('</tr>');
             writer.writeLine();
-            this.writeNode(cell.content, context, false);
-            writer.ensureNewLine();
-            writer.writeLine();
-            writer.write('</td>');
           }
-          writer.write('</tr>');
-          writer.writeLine();
         }
         writer.write('</tbody>');
         writer.write('</table>');
@@ -157,6 +160,14 @@ export class CustomMarkdownEmitter extends MarkdownEmitter {
       default:
         super.writeNode(docNode, context, docNodeSiblings);
     }
+  }
+
+  private getName(row: DocTableRow, context: IMarkdownEmitterContext):string{
+    const writer:IndentedWriter = new IndentedWriter();
+    if (row.cells.length > 0) {
+      this.writeNode(row.cells[0].content, {...context, writer}, false);
+    }
+    return writer.getText();
   }
 
   protected override writeLinkTagWithCodeDestination(

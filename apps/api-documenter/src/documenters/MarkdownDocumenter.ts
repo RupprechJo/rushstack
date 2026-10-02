@@ -17,7 +17,7 @@ import {
   StandardTags,
   type DocBlock,
   type DocComment,
-  type DocNodeContainer
+  type DocNodeContainer, DocNode
 } from '@microsoft/tsdoc';
 import {
   type ApiModel,
@@ -710,39 +710,43 @@ export class MarkdownDocumenter {
           break;
         }
         case ApiItemKind.Method: {
-          methodsTable.addRow(
-            new DocTableRow({ configuration }, [
-              this.#createTitleCell(apiMember),
-              this.#createModifiersCell(apiMember),
-              this.#createDescriptionCell(apiMember, isInherited)
-            ])
-          );
+          if (apiMember instanceof ApiDocumentedItem && apiMember.tsdocComment !== undefined) {
+            methodsTable.addRow(
+                new DocTableRow({configuration}, [
+                  this.#createTitleCell(apiMember),
+                  this.#createModifiersCell(apiMember),
+                  this.#createDescriptionCell(apiMember, isInherited)
+                ])
+            );
 
-          this.#writeApiItemPage(apiMember);
+            this.#writeApiItemPage(apiMember);
+          }
           break;
         }
         case ApiItemKind.Property: {
-          if ((apiMember as ApiPropertyItem).isEventProperty) {
-            eventsTable.addRow(
-              new DocTableRow({ configuration }, [
-                this.#createTitleCell(apiMember),
-                this.#createModifiersCell(apiMember),
-                this.#createPropertyTypeCell(apiMember),
-                this.#createDescriptionCell(apiMember, isInherited)
-              ])
-            );
-          } else {
-            propertiesTable.addRow(
-              new DocTableRow({ configuration }, [
-                this.#createTitleCell(apiMember),
-                this.#createModifiersCell(apiMember),
-                this.#createPropertyTypeCell(apiMember),
-                this.#createDescriptionCell(apiMember, isInherited)
-              ])
-            );
-          }
+          if (apiMember instanceof ApiDocumentedItem && apiMember.tsdocComment !== undefined) {
+            if ((apiMember as ApiPropertyItem).isEventProperty) {
+              eventsTable.addRow(
+                  new DocTableRow({configuration}, [
+                    this.#createTitleCell(apiMember),
+                    this.#createModifiersCell(apiMember),
+                    this.#createPropertyTypeCell(apiMember),
+                    this.#createDescriptionCell(apiMember, isInherited)
+                  ])
+              );
+            } else {
+              propertiesTable.addRow(
+                  new DocTableRow({configuration}, [
+                    this.#createTitleCell(apiMember),
+                    this.#createModifiersCell(apiMember),
+                    this.#createPropertyTypeCell(apiMember),
+                    this.#createDescriptionCell(apiMember, isInherited)
+                  ])
+              );
+            }
 
-          this.#writeApiItemPage(apiMember);
+            this.#writeApiItemPage(apiMember);
+          }
           break;
         }
       }
@@ -1009,10 +1013,10 @@ export class MarkdownDocumenter {
     return new DocTableCell({ configuration }, [
       new DocParagraph({ configuration }, [
         new DocLinkTag({
-          configuration,
-          tagName: '@link',
+      configuration,    
+      tagName: '@link',
           linkText: linkText,
-          urlDestination: this.#getLinkFilenameForApiItem(apiItem)
+      urlDestination: this.#getLinkFilenameForApiItem(apiItem)
         })
       ])
     ]);
@@ -1052,6 +1056,10 @@ export class MarkdownDocumenter {
         new DocPlainText({ configuration, text: ' ' })
       ]);
     }
+    const isDeprecated:boolean = apiItem instanceof ApiDocumentedItem
+        && apiItem.tsdocComment !== undefined
+        && apiItem.tsdocComment.deprecatedBlock !== undefined;
+    const tsBloc:DocBlock | undefined = isDeprecated ? (apiItem as ApiDocumentedItem).tsdocComment?.deprecatedBlock : undefined;
 
     if (apiItem instanceof ApiDocumentedItem) {
       if (apiItem.tsdocComment !== undefined) {
@@ -1072,6 +1080,17 @@ export class MarkdownDocumenter {
           new DocPlainText({ configuration, text: ')' })
         ])
       );
+    }
+
+    if (isDeprecated){
+      section.appendNodesInParagraph([
+        new DocEmphasisSpan({ configuration, italic: true }, [
+          new DocPlainText({ configuration, text: '(Deprecated): ' })
+        ])
+      ]);
+      if (tsBloc !== undefined ){
+        section.appendNodes(tsBloc.content.nodes);
+      }
     }
 
     return new DocTableCell({ configuration }, section.nodes);

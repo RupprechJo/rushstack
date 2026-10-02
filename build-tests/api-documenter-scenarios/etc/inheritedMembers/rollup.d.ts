@@ -6,6 +6,13 @@ export declare class Class1 extends Class2<number> {
     secondProp: boolean;
     /** A fourth prop */
     fourthProp: number;
+    fivthProp: string;
+    ɵngprop: string;
+    /**
+     * Some deprecated prop.
+     * @deprecated This prop is deprecated. Use `fourthProp` instead.
+     */
+    deprecatedProp: string;
     /** Some overload. Overrides `Class3.someOverload`. */
     someOverload(x: boolean | string): void;
 }

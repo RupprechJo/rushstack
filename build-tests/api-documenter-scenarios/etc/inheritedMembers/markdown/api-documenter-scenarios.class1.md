@@ -37,6 +37,27 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
+[deprecatedProp](./api-documenter-scenarios.class1.deprecatedprop.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+Some deprecated prop.<!-- -->_(Deprecated):_ 
+
+This prop is deprecated. Use `fourthProp` instead.
+
+
+</td></tr>
+<tr><td>
+
 [fourthProp](./api-documenter-scenarios.class1.fourthprop.md)
 
 
